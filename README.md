@@ -15,7 +15,8 @@ Save and Open capture their logical snapshot and destination before asynchronous
 work, block track mutations while the operation is pending, and reject stale
 results if the puzzle changes. Saved-file overwrites use the current version.
 Losing desktop-window focus, switching workspaces, minimizing, rolling up,
-leaving the browser, or hiding the page pauses an active run. Toolbar actions
+leaving the browser, or hiding the page pauses an active run. The Run control changes
+to Pause or Resume so phone users can continue a paused run. Toolbar actions
 remain at least 40px on desktop and 44px on phone-sized layouts.
 
 ## Evidence
@@ -27,6 +28,7 @@ npm test --prefix apps/system/marble-works
 node tests/marble-works-browser.test.mjs
 CODI_PHONE=1 node tests/marble-works-browser.test.mjs
 node tests/marble-works-account.test.mjs
+node tests/marble-works-pause-review.test.mjs
 ```
 
 The model tests cover sub-stepping, atomic invalid placement, edit/reset,

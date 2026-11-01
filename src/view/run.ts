@@ -199,7 +199,7 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
   const setBusy = (value: boolean) => {
     busy = value;
     loadLevel.disabled = value;
-    runButton.disabled = value || session.phase !== 'build';
+    runButton.disabled = value || (session.phase !== 'build' && session.phase !== 'running');
     editButton.disabled = value || (session.phase === 'build' && session.paused);
     retryButton.disabled = value;
     rotateLeft.disabled = value;
@@ -288,6 +288,13 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
 
   function run(): void {
     if (busy) return;
+    if (session.phase === 'running') {
+      session.paused = !session.paused;
+      mark();
+      tell(session.paused ? 'Marble paused. Press Resume to continue.' : 'Marble running.');
+      refresh();
+      return;
+    }
     if (session.phase !== 'build') {
       tell('Use Retry or Edit track to start another run.');
       return;
@@ -536,8 +543,10 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
       button.disabled = remaining[kind] <= 0;
       button.setAttribute('aria-pressed', String(kind === selectedKind));
     }
-    runButton.disabled = session.phase !== 'build';
-    editButton.disabled = session.phase === 'build' && session.paused;
+    runButton.textContent = session.phase === 'running' ? (session.paused ? 'Resume' : 'Pause') : 'Run';
+    runButton.setAttribute('aria-label', runButton.textContent);
+    runButton.disabled = busy || (session.phase !== 'build' && session.phase !== 'running');
+    editButton.disabled = busy || (session.phase === 'build' && session.paused);
     info.textContent = `${session.paused ? 'Paused' : 'Running'} · ${session.phase} · ` +
       `${session.pieces.length} pieces placed · ${session.elapsedMs.toFixed(0)} ms · ` +
       `Start ${session.puzzle.start.x + 1},${session.puzzle.start.y + 1} · ` +
@@ -668,13 +677,11 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
     else if (key === 'arrowright') ghost.x = Math.min(GRID - 1, ghost.x + 1);
     else if (key === 'arrowup') ghost.y = Math.max(0, ghost.y - 1);
     else if (key === 'arrowdown') ghost.y = Math.min(GRID - 1, ghost.y + 1);
-    else if (key === 'q') return rotate(-1);
-    else if (key === 'e') return rotate(1);
-    else if (key === 'enter') return placeAt(ghost.x, ghost.y);
-    else if (key === ' ') return session.phase === 'build' ? run() : retry();
-    else if (key === 'escape') {
-      session.paused = !session.paused;
-    } else return;
+    else if (key === 'q') { event.preventDefault(); if (!busy) rotate(-1); return; }
+    else if (key === 'e') { event.preventDefault(); if (!busy) rotate(1); return; }
+    else if (key === 'enter') { event.preventDefault(); placeAt(ghost.x, ghost.y); return; }
+    else if (key === ' ' || key === 'escape') { event.preventDefault(); if (!event.repeat && (key === ' ' || session.phase === 'running')) run(); return; }
+    else return;
     event.preventDefault();
     refresh();
   };
