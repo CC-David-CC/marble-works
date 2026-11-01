@@ -1,0 +1,123 @@
+{
+  "category": "02-three-physics-xr",
+  "id": "marble-works",
+  "title": "Marble Works",
+  "genre": "Build-and-run marble puzzle",
+  "pitch": "Build a short track from a limited kit, release a marble and guide it into the goal.",
+  "capabilities": [
+    "Swept/continuous collision handling",
+    "Static track assembly and reusable materials",
+    "Physical testing plus authored construction constraints"
+  ],
+  "rules": [
+    "Build only while paused. Snap ramps, curves and funnels to a known grid; validate overlaps before committing.",
+    "Run releases exactly one marble. Win when it settles in the goal sensor; out-of-bounds or timeout offers retry.",
+    "Editing after a run resets the marble to its start. Do not rewind only the renderer while leaving physics advanced."
+  ],
+  "content": "Eight authored puzzles and a bounded free-build mode with six track pieces.",
+  "state": [
+    "level and available kit",
+    "piece transforms and ids",
+    "run state and marble snapshot",
+    "goal completion",
+    "medals and seed"
+  ],
+  "actions": [
+    {
+      "command": "place-piece",
+      "desktop": "Select kit item, click ghost",
+      "phone": "Select then tap ghost",
+      "xr": "Ray-select kit; place with ray or hand"
+    },
+    {
+      "command": "rotate-piece",
+      "desktop": "Q/E or rotate button",
+      "phone": "Rotate buttons",
+      "xr": "Rotate buttons or deliberate grab rotation"
+    },
+    {
+      "command": "run-reset",
+      "desktop": "Space / Run",
+      "phone": "Run / Retry buttons",
+      "xr": "Bench Run / Retry controls"
+    }
+  ],
+  "rive": {
+    "asset": "marble-gate.riv",
+    "role": "Animated start gate and goal sign; visual parts never substitute for physical collider geometry.",
+    "properties": {
+      "piecesLeft": "integer",
+      "progress": "number 0..1",
+      "running": "boolean"
+    },
+    "events": [
+      "launch",
+      "goal",
+      "retry"
+    ],
+    "states": [
+      "ready",
+      "running",
+      "success",
+      "tryAgain"
+    ],
+    "artboard": "Main",
+    "stateMachine": "Presentation",
+    "assetStatus": "to_author"
+  },
+  "polish": [
+    "Trajectory replay line after an attempt",
+    "Snap preview unmistakably distinct from committed track",
+    "Goal uses settling dwell, not one noisy overlap"
+  ],
+  "tests": [
+    "Fast marble does not tunnel through track seams in qualified speed range.",
+    "Invalid overlapping placement is atomic.",
+    "Edit while running pauses and resets explicitly.",
+    "Goal cannot award twice.",
+    "Phone piece rotation works without gesture conflicts.",
+    "XR scaling does not change marble gravity or goal radius in model units."
+  ],
+  "loop": [
+    "in build mode validate and commit snapped piece placement",
+    "on run create/reset marble from level start",
+    "step Rapier with selected CCD settings",
+    "track goal sensor dwell and out-of-bounds",
+    "commit win/fail and show attempt trace"
+  ],
+  "save": "Layout plus progress; live run snapshot supported only on same pinned physics build.",
+  "wave": 2,
+  "xr_mode": "tabletop",
+  "xr_presentation": "A miniature construction board in AR or on a virtual VR table; construction handles use the same snapping rules as desktop.",
+  "comfort": "Fixed-table experience; never move the camera along the marble automatically.",
+  "specVersion": 1,
+  "status": "planned",
+  "implementation": "not_started",
+  "runtimeTests": "not_run",
+  "engine": "Three.js + Rapier",
+  "singlePlayer": true,
+  "phoneRequired": true,
+  "mountContract": {
+    "export": "mount",
+    "synchronous": true,
+    "returns": [
+      "element",
+      "dispose"
+    ],
+    "productionEntry": "index.mjs",
+    "suppliedEntry": "index.pseudo.mjs"
+  },
+  "xrRequired": true,
+  "riveRequired": true,
+  "riveAssetIncluded": false,
+  "documentKind": "Layout plus progress; live run snapshot supported only on same pinned physics build.",
+  "sources": [
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S12",
+    "S13"
+  ]
+}
