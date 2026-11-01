@@ -22,9 +22,9 @@ remain at least 40px on desktop and 44px on phone-sized layouts.
 ## Evidence
 
 ```sh
-npm ci --prefix apps/system/marble-works --ignore-scripts
-npm run typecheck --prefix apps/system/marble-works
-npm test --prefix apps/system/marble-works
+npm ci --prefix apps/games/02-three-physics-xr/marble-works --ignore-scripts
+npm run typecheck --prefix apps/games/02-three-physics-xr/marble-works
+npm test --prefix apps/games/02-three-physics-xr/marble-works
 node tests/marble-works-browser.test.mjs
 CODI_PHONE=1 node tests/marble-works-browser.test.mjs
 node tests/marble-works-account.test.mjs
