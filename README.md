@@ -46,3 +46,7 @@ malformed-save rejection.
   phone play and performance/thermal measurements remain unverified.
 - A complete eight-puzzle playthrough matrix and authored level design review
   remain open.
+
+## Design requirements
+
+The original [design brief, controls, save rules, artwork and acceptance plans](design/README.md) are retained as reference. They describe targets; the implementation and qualification status above takes precedence.
