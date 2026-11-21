@@ -1,4 +1,4 @@
-import { Rng } from "./rng.js";
+import { Rng } from "./rng.ts";
 
 export const GRID = 8;
 export const MAX_SPEED = 6; // cells per second

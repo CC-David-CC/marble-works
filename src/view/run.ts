@@ -559,6 +559,16 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
   function draw(): void {
     const context = canvas.getContext('2d');
     if (!context) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 4);
+    const rect = canvas.getBoundingClientRect();
+    const cssSize = Math.max(280, Math.floor(rect.width || canvas.clientWidth || 640));
+    const targetBuffer = Math.round(cssSize * dpr);
+    if (canvas.width !== targetBuffer || canvas.height !== targetBuffer) {
+      canvas.width = targetBuffer;
+      canvas.height = targetBuffer;
+    }
+    const scale = cssSize / SIZE;
+    context.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
     const dark = contrast.checked;
     context.fillStyle = dark ? '#071019' : '#30251b';
     context.fillRect(0, 0, SIZE, SIZE);
@@ -753,6 +763,10 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
     tell('Build a route, then press Run.');
   }
   refresh();
+  const resizeObserver = new ResizeObserver(() => {
+    if (!disposed) draw();
+  });
+  resizeObserver.observe(canvas);
   lastFrame = performance.now();
   frame = requestAnimationFrame(tick);
 
@@ -763,6 +777,7 @@ export async function startView(host: Host, signal: AbortSignal): Promise<ViewHa
       disposed = true;
       cancelAnimationFrame(frame);
       clearWatch();
+      resizeObserver.disconnect();
       canvas.removeEventListener('pointermove', pointerMove);
       canvas.removeEventListener('pointerdown', pointerDown);
       canvas.removeEventListener('keydown', keyboard);

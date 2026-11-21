@@ -1,2 +1,59 @@
-.marble-view{display:flex;flex-direction:column;gap:8px;padding:8px;background:#f3eadc;color:#2d241b;overflow:auto}.marble-header,.marble-toolbar,.marble-controls,.marble-save-fields{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.marble-header{justify-content:space-between}.marble-heading{margin:0;font-size:20px}.marble-subtitle{margin:0;color:#6d5844}.marble-toolbar button,.marble-controls button,.marble-toolbar select,.marble-save-fields button{min-height:40px}.marble-layout{display:flex;gap:8px;min-height:320px}.marble-stage{flex:1 1 520px;min-width:280px;position:relative;display:flex;align-items:flex-start;justify-content:center}.marble-board{display:block;width:min(100%,620px);aspect-ratio:1;border:2px solid #725a3e;border-radius:8px;touch-action:none;outline-offset:3px}.marble-board:focus-visible{outline:3px solid #315f88}.marble-side{flex:0 1 260px;min-width:210px;min-height:0;display:flex;flex-direction:column;gap:8px;overflow:auto}.marble-coach{padding:10px;border:1px solid #b88b56;background:#fff8e9;border-radius:6px;font-size:13px}.marble-info,.marble-status{margin:0}.marble-warning{padding:8px;border:1px solid #a96831;background:#fff1d0;border-radius:4px}.marble-warning[hidden]{display:none}.marble-controls button{flex:1 1 100px;touch-action:none}.marble-settings label{display:inline-flex;align-items:center;gap:6px;margin:0 12px 6px 0}.marble-settings:not([open])>:not(summary),.marble-save:not([open])>.marble-save-fields{display:none}.marble-settings input[type=range]{width:130px}.marble-save-fields input{flex:1;min-width:150px}.marble-help p{max-width:75ch;margin:4px 0}.marble-pieces{display:flex;flex-wrap:wrap;gap:5px}.marble-piece[aria-pressed=true]{outline:3px solid #315f88}.marble-app .app-status{font-size:13px}
-@media(max-width:650px){.marble-view{padding:5px}.marble-layout{flex-direction:column}.marble-side{min-width:0}.marble-toolbar button,.marble-controls button,.marble-toolbar select,.marble-save-fields button{min-height:44px}.marble-board{width:100%}}
+.marble-view{display:flex;flex-direction:column;gap:10px;padding:12px;background:#f3eadc;color:#2d241b;overflow:auto;box-sizing:border-box}
+.marble-header,.marble-toolbar,.marble-controls,.marble-save-fields{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.marble-header{justify-content:space-between}
+.marble-heading{margin:0;font-size:22px}
+.marble-subtitle{margin:2px 0 0;color:#6d5844;font-size:14px}
+.marble-toolbar button,.marble-controls button,.marble-toolbar select,.marble-save-fields button{min-height:38px;padding:4px 12px;font-size:14px;border-radius:4px;cursor:pointer}
+.marble-layout{display:flex;gap:16px;min-height:340px;align-items:flex-start}
+.marble-stage{flex:1 1 540px;min-width:280px;position:relative;display:flex;align-items:flex-start;justify-content:center}
+.marble-board{display:block;width:100%;max-width:720px;aspect-ratio:1;border:2px solid #725a3e;border-radius:8px;touch-action:none;outline-offset:3px;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.marble-board:focus-visible{outline:3px solid #315f88}
+.marble-side{flex:0 1 280px;min-width:220px;min-height:0;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.marble-coach{padding:10px;border:1px solid #b88b56;background:#fff8e9;border-radius:6px;font-size:13px}
+.marble-info,.marble-status{margin:0}
+.marble-warning{padding:8px 12px;border:1px solid #a96831;background:#fff1d0;border-radius:4px}
+.marble-warning[hidden]{display:none}
+.marble-controls button{flex:1 1 100px;touch-action:none}
+.marble-settings label{display:inline-flex;align-items:center;gap:6px;margin:0 12px 6px 0;font-size:14px}
+.marble-settings:not([open])>:not(summary),.marble-save:not([open])>.marble-save-fields{display:none}
+.marble-settings summary,.marble-save summary,.marble-help summary{cursor:pointer;min-height:32px;font-weight:600}
+.marble-settings input[type=range]{width:130px}
+.marble-save-fields input{flex:1;min-width:150px;padding:6px 8px;border:1px solid #b88b56;border-radius:4px}
+.marble-help p{max-width:75ch;margin:4px 0}
+.marble-pieces{display:flex;flex-wrap:wrap;gap:6px}
+.marble-piece[aria-pressed=true]{outline:3px solid #315f88}
+.marble-app .app-status{font-size:14px}
+
+/* Tier 1: Phone / Compact Display (< 768px) */
+@media(max-width:767px){
+  .marble-view{padding:6px;gap:6px}
+  .marble-layout{flex-direction:column;align-items:center}
+  .marble-side{min-width:0;width:100%}
+  .marble-toolbar button,.marble-controls button,.marble-toolbar select,.marble-save-fields button{min-height:44px;flex:1 1 calc(50% - 6px)}
+  .marble-board{width:100%;max-width:min(90vw,480px)}
+  .marble-save-fields{flex-direction:column;align-items:stretch}
+  .marble-save-fields input{width:100%;min-width:0}
+}
+
+/* Tier 2: Full 1080p Desktop Display (1024px - 2559px) */
+@media(min-width:1024px) and (max-width:2559px){
+  .marble-view{max-width:1600px;margin:0 auto;padding:16px;gap:12px}
+  .marble-heading{font-size:24px}
+  .marble-board{max-width:760px}
+  .marble-side{flex:0 1 320px}
+}
+
+/* Tier 3: Complete 4K UHD Display (>= 2560px) */
+@media(min-width:2560px){
+  .marble-view{max-width:2400px;margin:0 auto;padding:24px;gap:18px}
+  .marble-heading{font-size:32px}
+  .marble-subtitle{font-size:18px}
+  .marble-board{max-width:1200px}
+  .marble-side{flex:0 1 440px;gap:16px}
+  .marble-coach{font-size:18px;padding:16px}
+  .marble-toolbar button,.marble-controls button,.marble-toolbar select,.marble-save-fields button{min-height:52px;font-size:18px;padding:8px 18px}
+  .marble-settings summary,.marble-save summary,.marble-help summary{font-size:20px;min-height:42px}
+  .marble-settings label{font-size:18px;gap:10px}
+  .marble-save-fields input{font-size:18px;padding:10px 14px}
+  .marble-app .app-status{font-size:18px}
+}

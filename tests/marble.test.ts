@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "./test-shim.ts";
 import {
   GOAL_RADIUS,
   GRID,
@@ -7,7 +7,7 @@ import {
   decodeSave,
   encodeSave,
   sessionFromSave,
-} from "../src/model/marble.js";
+} from "../src/model/marble.ts";
 
 describe("MarbleSession rules", () => {
   it("sub-stepping prevents a fast marble from tunneling past cells", () => {
